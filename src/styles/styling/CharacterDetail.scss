@@ -1,0 +1,218 @@
+$background-color: #0f0f1e;
+$card-background: rgba(255, 255, 255, 0.1);
+$primary-color: #4a90e2;
+$secondary-color: #50c878;
+$text-color: #ffffff;
+$accent-color: #ff6b6b;
+$highlight-color: #ff9800;
+
+// Mixins
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin neon-text($color) {
+  color: $color;
+  text-shadow: 0 0 10px rgba($color, 0.7), 0 0 20px rgba($color, 0.5),
+    0 0 30px rgba($color, 0.3);
+}
+
+@mixin card-pin {
+  &::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: $highlight-color;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba($highlight-color, 0.7);
+  }
+}
+
+// Main Styling
+.character-detail {
+  background-color: $background-color;
+  background-image: radial-gradient(
+    circle at 10% 20%,
+    rgba(91, 37, 195, 0.4) 0%,
+    rgba(49, 28, 75, 0.4) 100%
+  );
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 2rem;
+  min-height: 100vh;
+  color: $text-color;
+  overflow-x: hidden;
+
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .character-card,
+  .homeworld-card {
+    @include glassmorphism;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+
+    @media (min-width: 768px) {
+      @include card-pin;
+      transform: rotate(random(5) - 2.5deg);
+    }
+
+    &:hover {
+      transform: translateY(-6px) scale(1.05) rotate(0deg);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+  }
+
+  .character-name {
+    @include neon-text($primary-color);
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba($primary-color, 0.9);
+  }
+
+  .character-gender {
+    background-color: $secondary-color;
+    color: $text-color;
+    padding: 0.5rem 1rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .character-info,
+  .homeworld-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+
+    .info-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.75rem;
+      border-radius: 15px;
+      transition: background 0.3s ease, transform 0.3s ease,
+        box-shadow 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .info-label {
+        font-weight: bold;
+        color: $accent-color;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .info-value {
+        color: $text-color;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .homeworld-title {
+    @include neon-text($secondary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  .view-more-button {
+    background: linear-gradient(
+      45deg,
+      $primary-color,
+      lighten($primary-color, 10%)
+    );
+    color: $text-color;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 1.25rem;
+
+    &:hover {
+      background: linear-gradient(
+        45deg,
+        lighten($primary-color, 5%),
+        lighten($primary-color, 15%)
+      );
+      box-shadow: 0 0 20px rgba($primary-color, 0.7);
+      transform: translateY(-3px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    padding: 1.5rem;
+
+    .cards-container {
+      grid-template-columns: 1fr;
+    }
+
+    .character-card,
+    .homeworld-card {
+      padding: 1.25rem;
+      margin-top: 4rem;
+    }
+
+    .character-name {
+      font-size: 1.8rem;
+    }
+
+    .homeworld-title {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.character-card,
+.homeworld-card {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.character-card {
+  animation-delay: 0.2s;
+}
+.homeworld-card {
+  animation-delay: 0.4s;
+}

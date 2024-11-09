@@ -1,0 +1,46 @@
+.card-component {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  margin-bottom: 16px;
+}
+
+.card-title {
+  color: #333;
+}
+
+.card-badge {
+  text-transform: uppercase;
+}
+
+.card-details {
+  color: #555;
+  font-size: 14px;
+}
+
+.card-accordion .mantine-Accordion-item {
+  margin-bottom: 10px;
+}
+
+.accordion-control {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.accordion-panel {
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+.view-details-button {
+  background-color: #0070f3;
+  color: white;
+  &:hover {
+    background-color: #005bb5;
+  }
+}
